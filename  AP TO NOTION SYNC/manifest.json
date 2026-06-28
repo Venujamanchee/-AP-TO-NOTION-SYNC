@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "AP to Notion Sync",
+  "version": "1.4.0",
+  "description": "Automate syncing physics class details from ap.lk to your Notion workspace.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://api.notion.com/*",
+    "*://*.ap.lk/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://ap.lk/*",
+        "*://*.ap.lk/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

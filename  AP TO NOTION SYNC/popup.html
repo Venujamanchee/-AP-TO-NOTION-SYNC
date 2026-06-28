@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP Physics Notion Sync</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <img src="icon.png" class="logo-img" alt="Logo">
+        <h1 class="app-title">AP Notion Sync</h1>
+        
+        <!-- Theme Toggle Button -->
+        <button type="button" class="btn-theme-toggle" id="btn-theme-toggle" aria-label="Toggle Theme">
+          <span class="theme-emoji">🌙</span>
+        </button>
+      </div>
+      <p class="app-subtitle">Physics Class Automator</p>
+    </header>
+
+    <!-- Motivation Banner -->
+    <div class="motivation-banner">
+      <span class="motivation-emoji">💡</span>
+      <span class="motivation-text">Rec ගොඩගහන්නේ නැතුව බලපන්!..</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-container">
+      <button class="tab-btn active" id="tab-sync" data-tab="content-sync">
+        <span>Sync Class</span>
+      </button>
+      <button class="tab-btn" id="tab-settings" data-tab="content-settings">
+        <span>Settings</span>
+      </button>
+    </div>
+
+    <!-- Main Content Panels -->
+    <main class="panels-container">
+      <!-- Sync Tab Panel -->
+      <section class="panel active" id="content-sync">
+        <!-- Status Indicator -->
+        <div class="status-card" id="status-card">
+          <span class="status-dot"></span>
+          <span class="status-text" id="status-text">Checking webpage...</span>
+        </div>
+
+        <!-- Class Fields Form -->
+        <form class="sync-form" id="sync-form" onsubmit="return false;">
+          <div class="input-group">
+            <label for="class-title">Class Topic</label>
+            <input type="text" id="class-title" placeholder="Loading topic name..." required>
+          </div>
+
+          <div class="input-group">
+            <label for="class-date">Date & Time</label>
+            <input type="text" id="class-date" placeholder="Loading date..." required>
+          </div>
+
+          <div class="input-group">
+            <label for="class-link">Zoom or Video Link</label>
+            <input type="url" id="class-link" placeholder="Loading link...">
+          </div>
+
+          <div class="input-group">
+            <label for="notion-select-unit">Save under Unit</label>
+            <select id="notion-select-unit" disabled>
+              <option value="">Fetching unit sub-pages...</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn-primary" id="btn-sync-notion">
+            <span class="btn-text">Sync to Notion</span>
+            <span class="spinner hidden" id="sync-spinner"></span>
+          </button>
+        </form>
+
+        <!-- Message Toast / Status Overlay -->
+        <div class="toast hidden" id="sync-toast">
+          <div class="toast-icon"></div>
+          <div class="toast-content">
+            <h4 class="toast-title">Synced Successfully</h4>
+            <p class="toast-desc">Details added to Notion page.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Tab Panel -->
+      <section class="panel" id="content-settings">
+        <form class="settings-form" id="settings-form" onsubmit="return false;">
+          <div class="input-group">
+            <label for="notion-token">Notion Integration Token</label>
+            <div class="password-wrapper">
+              <input type="password" id="notion-token" placeholder="secret_..." required>
+              <button type="button" class="btn-toggle-pass" id="btn-toggle-token" aria-label="Toggle token visibility">👁️</button>
+            </div>
+            <span class="input-help">Create one at <a href="https://www.notion.so/my-integrations" target="_blank" class="link-external">notion.so/my-integrations</a></span>
+          </div>
+
+          <div class="input-group">
+            <label for="notion-target-id">Target ID (Page or Database ID)</label>
+            <input type="text" id="notion-target-id" placeholder="Enter ID" required>
+            <span class="input-help">Copied from your page/database URL</span>
+          </div>
+
+          <div class="input-group">
+            <label for="notion-target-type">Notion Target Type</label>
+            <select id="notion-target-type">
+              <option value="page">Sub-page (Create sub-page inside page)</option>
+              <option value="database">Database (Add row to database)</option>
+            </select>
+          </div>
+
+          <div class="settings-actions">
+            <button type="button" class="btn-secondary" id="btn-save-settings">Save Credentials</button>
+            <span class="save-status hidden" id="save-status">Saved!</span>
+          </div>
+        </form>
+
+        <!-- Setup Instructions Accordion -->
+        <div class="instructions-accordion">
+          <div class="accordion-header" id="instructions-trigger">
+            <span>How to set up?</span>
+            <span class="accordion-arrow">▼</span>
+          </div>
+          <div class="accordion-content hidden" id="instructions-content">
+            <ol class="setup-list">
+              <li>Go to <a href="https://www.notion.so/my-integrations" target="_blank">Notion Integrations</a> and click <strong>+ New integration</strong>.</li>
+              <li>Give it a name (e.g. "Physics Class Sync") and submit. Copy the <strong>Internal Integration Token</strong>.</li>
+              <li>Open your Notion page `Physics-Anurada-Sir`, click the three dots <code>•••</code> in the top right, go to <strong>Connections</strong> -> <strong>Connect to</strong>, and select your integration.</li>
+              <li>Copy your page ID from the URL (the 32-character code at the end of the URL).</li>
+              <li>Paste the token and target ID above, select <strong>Sub-page</strong>, and click <strong>Save</strong>!</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Created by Venuja Manchee</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
